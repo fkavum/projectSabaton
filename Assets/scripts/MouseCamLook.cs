@@ -13,7 +13,7 @@ using UnityEngine;
 public class MouseCamLook : MonoBehaviour {
 
     [SerializeField]
-    public float sensitivity = 5.0f;
+    public float sensitivity = 2.0f;
     [SerializeField]
     public float smoothing = 2.0f;
     // the chacter is the capsule
