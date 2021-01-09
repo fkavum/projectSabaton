@@ -20,18 +20,32 @@ public class CharacterController : MonoBehaviour
     private Rigidbody selfRigidbody;
     private float timepassed;
     private float jumpcooldown = 1.5f;
+    private float crouchwalkcooldown;
+    private float crouchtimepassed;
+    private float walktimepassed;
+    private float walkanimationcooldown;
+    public float camerasmooth = 0.125f; 
     public GameObject playermodel;
     private bool idle;
     private bool jumping;
     private bool running;
     private bool crouching;
     private Vector3 lastposition;
+    public Transform characterhead;
+    public Transform camera;
+    private Vector3 velocity = Vector3.zero;
 
 
-
+    void LateUpdate()
+    {
+        
+        camera.position = Vector3.SmoothDamp(camera.position, characterhead.position, ref velocity, camerasmooth);
+    }
     // Use this for initialization
     void Start()
     {
+        crouchwalkcooldown = 1.1f;
+        crouchwalkcooldown = 0.67f;
         lastposition = playermodel.transform.position;  
         idle = true;
         jumping = false;
@@ -61,18 +75,36 @@ public class CharacterController : MonoBehaviour
         translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         transform.Translate(straffe, 0, translation);
-        if ((Input.GetKey(KeyCode.W) && (jumping ==false )&&(running == false)))
+        if ((Input.GetKey(KeyCode.W) && (jumping ==false )&&(running == false)&&(crouching==false)&&(Time.time - walktimepassed > walkanimationcooldown)))
         {
+            walktimepassed = Time.time;
             playermodel.GetComponent<Animator>().Play("Run");
             running = true;
-            Invoke("norun", 0.75f);
+            //Invoke("norun", 0.67f);
 
             //Invoke("noanimation(running)", 1.5f);
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.W)&& crouching ==false&&jumping==false)
+        {
+            //playermodel.GetComponent<Animator>().SetBool("Run", false);
+            running = false;
+            playermodel.GetComponent<Animator>().Play("Run_idle");
+            //Invoke("idleanimation", 0.2f);
+            //playermodel.GetComponent<Animator>().Play("idle");
+        }
+        if ((Input.GetKey(KeyCode.S) && (jumping == false) && (running == false) && (crouching == false) && (Time.time - walktimepassed > walkanimationcooldown)))
+        {
+            walktimepassed = Time.time;
+            playermodel.GetComponent<Animator>().Play("Reverse_walk");
+            running = true;
+            
+        }
+        else if (Input.GetKeyUp(KeyCode.S) && crouching == false && jumping == false)
         {
             
-            //running = false;
+            running = false;
+            playermodel.GetComponent<Animator>().Play("Run_idle");
+            
         }
         if (Input.GetKeyDown("escape"))
         {
@@ -97,11 +129,50 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 15;
-            playermodel.GetComponent<Animator>().Play("Run");
+            playermodel.GetComponent<Animator>().Play("Run_fast");
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            playermodel.GetComponent<Animator>().Play("Run_fast_slow");
+            speed = 10;
+        }
+        if (Input.GetKeyDown(KeyCode.C)&& crouching==false )
+        {
+            speed /=  2;
+            playermodel.GetComponent<Animator>().Play("Stand_crouch");
+            crouching = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && crouching == true)
         {
             speed = 10;
+            playermodel.GetComponent<Animator>().Play("Crouch_stand");
+            crouching = false;
+
+        }
+
+        if ((Input.GetKey(KeyCode.W)&&(crouching==true)&&(Time.time - crouchtimepassed > crouchwalkcooldown)))
+        {
+            crouchtimepassed = Time.time;
+            playermodel.GetComponent<Animator>().Play("Crouch_walk");
+            
+        }
+        else if ((Input.GetKeyUp(KeyCode.W) && (crouching == true)))
+        {
+            playermodel.GetComponent<Animator>().Play("Crouch_walk_pose");
+            //Invoke("crouchidleanimation", 0.35f);
+
+        }
+        if ((Input.GetKey(KeyCode.S) && (crouching == true) && (Time.time - crouchtimepassed > crouchwalkcooldown)))
+        {
+            crouchtimepassed = Time.time;
+            playermodel.GetComponent<Animator>().Play("Reverse_crouchwalk");
+
+        }
+        else if ((Input.GetKeyUp(KeyCode.S) && (crouching == true)))
+        {
+            playermodel.GetComponent<Animator>().Play("Crouch_walk_pose");
+            //Invoke("crouchidleanimation", 0.35f);
+
         }
     }
 
@@ -117,4 +188,9 @@ public class CharacterController : MonoBehaviour
     {
         playermodel.GetComponent<Animator>().Play("idle");
     }
+    private void crouchidleanimation()
+    {
+        playermodel.GetComponent<Animator>().Play("Crouch_pose");
+    }
+
 }

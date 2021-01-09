@@ -410,7 +410,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   forceConst: 5
+  camerasmooth: 0.1
   playermodel: {fileID: 1971901583}
+  characterhead: {fileID: 1095156037}
+  camera: {fileID: 1366578820}
+--- !u!4 &1095156037 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8700783698680967558, guid: f70e8187ee252de4baa1072b7ebf553d,
+    type: 3}
+  m_PrefabInstance: {fileID: 258876717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1366578819
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +447,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366578819}
-  m_LocalRotation: {x: -0.0000000055879354, y: 6.9849193e-10, z: 6.184564e-10, w: 1}
+  m_LocalRotation: {x: -0.000000020489097, y: -6.9849193e-10, z: 0.000000009029463,
+    w: 1}
   m_LocalPosition: {x: 0, y: 1.3024216, z: 0.3279724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -484,7 +494,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.43
   far clip plane: 1000
   field of view: 60
   orthographic: 0
