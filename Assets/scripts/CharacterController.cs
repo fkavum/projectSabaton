@@ -131,9 +131,19 @@ public class CharacterController : MonoBehaviour
             speed = 15;
             playermodel.GetComponent<Animator>().Play("Run_fast");
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKeyUp(KeyCode.W)))
+        {
+            playermodel.GetComponent<Animator>().Play("Run_idle");
+            speed = 10;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.W)))
         {
             playermodel.GetComponent<Animator>().Play("Run_fast_slow");
+            speed = 10;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.S)))
+        {
+            playermodel.GetComponent<Animator>().Play("Run_fast_slow_reverse");
             speed = 10;
         }
         if (Input.GetKeyDown(KeyCode.C)&& crouching==false )

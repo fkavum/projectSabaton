@@ -5826,7 +5826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   forceConst: 5
-  camerasmooth: 0.1
+  camerasmooth: 0.0001
   playermodel: {fileID: 2078277384}
   characterhead: {fileID: 2078277382}
   camera: {fileID: 1226111243}
