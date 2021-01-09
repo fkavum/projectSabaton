@@ -8,6 +8,20 @@ public class Player : MonoBehaviour
     [Header("interaction")]
     public float maxInteractionDistance;
 
+    [NonSerialized]
+    public PlayerInventory inventory;
+
+    private void Start()
+    {
+        CreateInventory();
+    }
+
+    private void CreateInventory()
+    {
+        inventory = new PlayerInventory();
+        inventory.hasBottle = false;
+    }
+
     private void Update()
     {
         CheckInteractables();
@@ -40,4 +54,11 @@ public class Player : MonoBehaviour
             UIManager.instance.HideInteractionText();
         }
     }
+}
+
+
+public struct PlayerInventory
+{
+    public bool hasBottle;
+
 }
