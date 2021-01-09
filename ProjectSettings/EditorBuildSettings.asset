@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ErtugrulScene.unity
     guid: dafaf0feaec49864baaac86c2de37874
+  - enabled: 1
+    path: Assets/Scenes/Scene2.unity
+    guid: ba87bf9935542814f9486f73cd20a25a
   m_configObjects: {}

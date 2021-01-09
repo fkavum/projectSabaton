@@ -14,6 +14,6 @@ public class Putin_ai : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        putinmodel.GetComponent<Animator>().Play("Putin_sit");
+        //putinmodel.GetComponent<Animator>().Play("Putin_sit");
     }
 }

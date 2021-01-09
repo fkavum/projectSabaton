@@ -13,7 +13,7 @@ public class Levelending_door : Interactable
     public override void GetInteracted(Player player)
     {
         isInteractable = false;
-        loadlevel("FatihScene");
+        loadlevel("Scene2");
         
     }
 
