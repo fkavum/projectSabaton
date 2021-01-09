@@ -44,6 +44,7 @@ public class CharacterController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         crouchwalkcooldown = 1.1f;
         crouchwalkcooldown = 0.67f;
         lastposition = playermodel.transform.position;  
@@ -116,25 +117,50 @@ public class CharacterController : MonoBehaviour
         {
             timepassed = Time.time;
             canJump = true;
-            if (jumping == false)
+            if (jumping == false &&(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
+            {
+                playermodel.GetComponent<Animator>().Play("JumpWhileRun");
+                jumping = true;
+                Invoke("nojump", 1f);
+                
+                //Invoke("idleanimation", 2f);
+            }
+            else if (jumping == false)
             { 
                 playermodel.GetComponent<Animator>().Play("Jump");
                 jumping = true;
                 Invoke("nojump", 1f);
+                if (Input.GetKey(KeyCode.W))
+                {
+                    
+                    
+                    //Invoke("idleanimation", 2f);
+                }
                 //Invoke("idleanimation", 2f);
             }
-
+            
         }
-        
+        if (crouching == false) { 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 15;
             playermodel.GetComponent<Animator>().Play("Run_fast");
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKeyUp(KeyCode.W)))
+        {
+            playermodel.GetComponent<Animator>().Play("Run_idle");
+            speed = 10;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.W)))
         {
             playermodel.GetComponent<Animator>().Play("Run_fast_slow");
             speed = 10;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.S)))
+        {
+            playermodel.GetComponent<Animator>().Play("Run_fast_slow_reverse");
+            speed = 10;
+        }
         }
         if (Input.GetKeyDown(KeyCode.C)&& crouching==false )
         {
