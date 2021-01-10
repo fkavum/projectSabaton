@@ -29,4 +29,8 @@ public class Levelending_door : Interactable
         SceneManager.LoadScene(level);
 
     }
+    public override bool IsInteractable(Player player)
+    {
+        return isInteractable;
+    }
 }

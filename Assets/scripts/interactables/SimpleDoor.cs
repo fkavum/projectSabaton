@@ -24,5 +24,8 @@ public class SimpleDoor : Interactable
         else
             return "FBI close the door!";
     }
-
+    public override bool IsInteractable(Player player)
+    {
+        return isInteractable;
+    }
 }

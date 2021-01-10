@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxInteractionDistance, LayerMask.GetMask("Interactable")))
         {
             Interactable interactable = hit.collider.gameObject.GetComponentInParent<Interactable>();
-            if (interactable.isInteractable)
+            if (interactable.IsInteractable(this))
             {
                 UIManager.instance.ShowInteractionText(interactable.GetInteractionText());
 

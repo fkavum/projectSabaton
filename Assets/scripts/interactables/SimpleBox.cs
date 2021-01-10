@@ -14,4 +14,8 @@ public class SimpleBox : Interactable
     {
         return "Wuhahhahah";
     }
+    public override bool IsInteractable(Player player)
+    {
+        return isInteractable;
+    }
 }

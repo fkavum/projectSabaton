@@ -7,5 +7,5 @@ public abstract class Interactable : MonoBehaviour
     public bool isInteractable = true;
     public abstract void GetInteracted(Player player);
     public abstract string GetInteractionText();
-    
+    public abstract bool IsInteractable(Player player);
 }

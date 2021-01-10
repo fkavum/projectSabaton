@@ -24,6 +24,7 @@ public class InteractableBottle : Interactable
         {
             player.inventory.hasBottle = true;
             Destroy(gameObject);
+            Scene1Manager.instance.PlayerHasBottle();
         }
     }
 
@@ -37,5 +38,10 @@ public class InteractableBottle : Interactable
         {
             return "pick my dear wodka!";
         }
+    }
+
+    public override bool IsInteractable(Player player)
+    {
+        return Scene1Manager.instance.isPutinTalked;
     }
 }

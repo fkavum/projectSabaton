@@ -1,60 +1,77 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using DG.Tweening.Plugins.Core.PathCore;
 
 public class Putin_ai : MonoBehaviour
 {
-    public GameObject putinmodel;
-    // Start is called before the first frame update
-    public float turnspeed = 0.1f;
-    public float mspeed = 0.5f;
-    float startX = 0f;
-    Vector3 startPosition;
-    
-    public void turn()
-    {
-        //transform.RotateAround(transform.position, Vector3.up, 90*Time.deltaTime);
-        //transform.Rotate(new Vector3(0,90,0)*turnspeed);
-        //InvokeRepeating("turner", 1, 1);
-        while (transform.eulerAngles.y < 270)
-        {
-            transform.Rotate(Vector3.up * Time.deltaTime*turnspeed);
-        }
-        Debug.Log("turned");
-        Vector3 startPosition = transform.position;
-        //Invoke("walk", 1f);
 
-        
-        
-
-
-    }
-    public void walk()
-    {
-        
-        //transform.Translate(Vector3.forward * Time.deltaTime);
-        //var pos = transform.position;
-        //var newX = startX + 100 * Mathf.Sin(Time.time * mspeed);
-        //var newX = startX + 100 * (Time.time * mspeed);
-        //transform.position = new Vector3(newX, pos.y, pos.z);
-        //transform.Translate(0, 0, 1.5f*mspeed*Time.deltaTime);    
-        transform.position = Vector3.Lerp(startPosition, new Vector3 (1.5f,0,0)+transform.forward, mspeed*Time.deltaTime);
-        Debug.Log("Walked");
-    }
+    public Animator animator;
+    public Transform[] pathTransforms;
 
     void Start()
     {
-        Vector3 startPosition = transform.position;
-        //turn();
-        //putinmodel.GetComponent<Animator>().Play("Putin_sit");
+   
+        StartCoroutine(PutinMove1());
+
     }
 
-    // Update is called once per frame
+
+    IEnumerator PutinMove1()
+    {
+
+        yield return new WaitForSeconds(1f);
+
+        animator.Play("Putin_sit_to_stand");
+
+        yield return new WaitForSeconds(2f);
+        animator.Play("Putin_idle");
+        yield return new WaitForSeconds(0.5f);
+
+
+        List<Vector3> path = new List<Vector3>();
+        foreach (var pathTransform in pathTransforms)
+        {
+            path.Add(pathTransform.position);
+        }
+        Vector3[] pathArray = path.ToArray();
+
+
+
+        TweenerCore<Vector3, Path, PathOptions> tween = transform.DOPath(pathArray, 4, PathType.CatmullRom, PathMode.Full3D).OnStart(() => { animator.Play("putinWalking"); }).OnComplete(() => {
+
+            animator.Play("Putin_idle");
+
+        }).SetLookAt(0.001f, -transform.forward, transform.up).SetEase(Ease.Linear).SetAutoKill(false);
+
+        yield return new WaitForSeconds(10f);
+        Scene1Manager.instance.isPutinTalked = true;
+        tween.PlayBackwards();
+        tween.SetLookAt(0.001f,transform.forward,transform.up);
+        animator.Play("putinWalking");
+        yield return new WaitForSeconds(4.2f);
+        animator.Play("Putin_idle");
+        transform.DORotate(new Vector3(0, 180, 0), 1f).OnComplete(()=> {
+            animator.Play("Putin_sit");
+        });
+
+    }
+
     void Update()
     {
-        //var pos = transform.position;
-        //var newX = startX + 700f * Mathf.Sin(Time.time * mspeed);
-        //transform.position = new Vector3(newX, pos.y, pos.z);
-        //putinmodel.GetComponent<Animator>().Play("Putin_sit");
+    }
+
+
+    public void turn()
+    {
+        Debug.Log("turned");
+    }
+    public void walk()
+    {
+        Debug.Log("Walked");
     }
 }
