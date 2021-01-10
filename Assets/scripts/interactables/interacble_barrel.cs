@@ -54,7 +54,7 @@ public class interacble_barrel : Interactable
 
     public override bool IsInteractable(Player player)
     {
-        return isInteractable;
+        return Scene3Manager.instance.isPlayerHasQuest;
     }
 
     // Start is called before the first frame update

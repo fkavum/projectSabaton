@@ -10,11 +10,8 @@ public class wallinterractable : Interactable
 
     public override void GetInteracted(Player player)
     {
-        if (player.inventory.barrelcolor != Color.black) {
-            gameObject.GetComponent<MeshRenderer>().material.color = player.inventory.barrelcolor;
-        }
-        
-
+        gameObject.GetComponent<MeshRenderer>().material.color = player.inventory.barrelcolor;
+        Scene3Manager.instance.CheckQuestStatus();
     }
 
     public override string GetInteractionText()
@@ -31,13 +28,14 @@ public class wallinterractable : Interactable
 
     public override bool IsInteractable(Player player)
     {
-        return isInteractable;
+        return (player.inventory.barrelcolor != Color.black);
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Scene3Manager.instance.materials.Add(gameObject.GetComponent<MeshRenderer>().material);
     }
 
     // Update is called once per frame

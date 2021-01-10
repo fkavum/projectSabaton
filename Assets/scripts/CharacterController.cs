@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
     public float speed = 7.0f;
     private float translation;
     private float straffe;
-    public int forceConst = 10;
+    public float forceConst = 10;
     private bool canJump;
     private Rigidbody selfRigidbody;
     private float timepassed;
