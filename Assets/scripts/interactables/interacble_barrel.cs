@@ -51,6 +51,12 @@ public class interacble_barrel : Interactable
             return "Come On";
         }
     }
+
+    public override bool IsInteractable(Player player)
+    {
+        return isInteractable;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

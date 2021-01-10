@@ -32,7 +32,7 @@ public class InteractableBottle : Interactable
     {
         if (rotateIndex < 2)
         {
-            return "Rotate me baby";
+            return "Sping me right round";
         }
         else
         {
