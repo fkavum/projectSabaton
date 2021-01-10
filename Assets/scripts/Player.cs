@@ -14,12 +14,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         CreateInventory();
+        
     }
 
     private void CreateInventory()
     {
         inventory = new PlayerInventory();
         inventory.hasBottle = false;
+        inventory.barrelcolor = Color.black;    
     }
 
     private void Update()
@@ -60,5 +62,6 @@ public class Player : MonoBehaviour
 public struct PlayerInventory
 {
     public bool hasBottle;
+    public Color barrelcolor;
 
 }
