@@ -12,7 +12,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
 
-    public float speed = 10.0f;
+    public float speed = 7.0f;
     private float translation;
     private float straffe;
     public int forceConst = 10;
@@ -143,23 +143,23 @@ public class CharacterController : MonoBehaviour
         if (crouching == false) { 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed = 15;
+            speed = 12;
             playermodel.GetComponent<Animator>().Play("Run_fast");
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKeyUp(KeyCode.W)))
         {
             playermodel.GetComponent<Animator>().Play("Run_idle");
-            speed = 10;
+            speed = 7;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.W)))
         {
             playermodel.GetComponent<Animator>().Play("Run_fast_slow");
-            speed = 10;
+            speed = 7;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && (Input.GetKey(KeyCode.S)))
         {
             playermodel.GetComponent<Animator>().Play("Run_fast_slow_reverse");
-            speed = 10;
+            speed = 7;
         }
         }
         if (Input.GetKeyDown(KeyCode.C)&& crouching==false )
@@ -170,7 +170,7 @@ public class CharacterController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.C) && crouching == true)
         {
-            speed = 10;
+            speed = 7;
             playermodel.GetComponent<Animator>().Play("Crouch_stand");
             crouching = false;
 
